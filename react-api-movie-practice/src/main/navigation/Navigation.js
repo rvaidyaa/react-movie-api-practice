@@ -5,7 +5,7 @@ import Slider from "./Slider";
 
 class Navigation extends React.Component {
     state = {
-        genre: "comedy",
+        genre: "action",
         genres: [],
         year: {
             label: "year",
@@ -28,28 +28,30 @@ class Navigation extends React.Component {
             step: 15,
             value: { min: 60, max: 120 }
         }
-    };
-    componentDidMount() {
+    }; //
+    componentDidMount() { //fetch genres from api
         const genresURL = `https://api.themoviedb.org/3/genre/movie/list?api_key=${process.env.REACT_APP_TMDB_API_KEY}&language=en-US`
         fetch(genresURL)
-            .then(response => response.json())
-            .then(data => this.setState({genres: data.genres }))
+            .then(response => response.json())//convert to javascript object notation
+            .then(data => this.setState({genres: data.genres }))// take the list of genres from second promise and set it into state
             .catch(error => console.log(error));
     }
-
+// when we call our genre select component we pass it a onGenreChange prop that will set the new genre in the state
     onGenreChange = event => {
         this.setState({
             genre: event.target.value
         });
     }
-
+// whenw we call call our slider componenets we pass it a data property for year rating or runtime. data.type returns those 3 values so we set our state for that particular value. ...this.state[data.type] is a fresh object with runtime etc. Find the value and update it with user selected data value
     onChange = data => {
         this.setState({
             [data.type]: {
-                ...this.state[data.type],
-                value: data.value
+                ...this.state[data.type], //previous value of this.state.runtime(ex)
+                value: data.value //update the value property
             }
         });
+        console.log({...this.state[data.type]});
+        console.log(data.type);
     };
 
 

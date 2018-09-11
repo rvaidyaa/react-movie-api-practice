@@ -25,7 +25,7 @@ class Movies extends React.Component {
 
         });
         console.log('store movies ran, incoming movies with our destructuring, console logging it')
-        console.log(movies);
+        console.log(movies);// shove it into the state then render a component movelist item with properties from said state.
         this.setState({movies});
     }
 
